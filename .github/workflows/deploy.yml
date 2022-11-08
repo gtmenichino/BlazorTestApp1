@@ -14,4 +14,4 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
-      - uses: proulxsamuel/deploy-blazor-to-gh-pages@master
+      - uses: gtmenichino/BlazorTestApp1@master
