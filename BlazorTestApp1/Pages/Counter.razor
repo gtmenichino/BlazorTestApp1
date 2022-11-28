@@ -1,31 +1,199 @@
-﻿@page "/counter"
+﻿@*@using RDotNet
+@using RDotNet.NativeLibrary*@
+@inject HttpClient Http
+
+
+@page "/counter"
 
 <PageTitle>Counter</PageTitle>
 
-@code{
+@code {
     private string TheTitle = "Title";
+    private string imagePngDataURL = string.Empty;
 }
 
 <h1>Counter</h1>
 <h2>@TheTitle</h2>
+<h3> Display Image in Blazor</h3>
+
+<div>
+    <img src="images/imageGo.png" />
+</div>
+
 
 <p role="status">Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click this</button>
 
+
+
 @code {
     private int currentCount = 0;
     private BlazorTestApp1.MyClass? ThisThing = null;
 
-
-
     private void IncrementCount()
     {
-        //currentCount++;
-        //ThisThing = null;
+        currentCount++;
+        ThisThing = null;
         ThisThing = new MyClass();
+        //NewTest();
         TheTitle = ThisThing.Name + currentCount;
+        //String[]? RetStrArr = null;
+        //TestR(RetStrArr);
+        //TheTitle = string.Join(",", RetStrArr);
 
-        currentCount = currentCount + 3;
+        //currentCount = currentCount + 3;
     }
+
+    //private void TestR(string[] args)
+    //{
+    //    REngine.SetEnvironmentVariables(); // <-- May be omitted; the next line would call it.
+    //    REngine engine = REngine.GetInstance();
+    //    // A somewhat contrived but customary Hello World:
+    //    CharacterVector charVec = engine.CreateCharacterVector(new[] { "Hello, R world!, .NET speaking" });
+    //    engine.SetSymbol("greetings", charVec);
+    //    engine.Evaluate("str(greetings)"); // print out in the console
+    //    string[] a = engine.Evaluate("'Hi there .NET, from the R engine'").AsCharacter().ToArray();
+    //    Console.WriteLine("R answered: '{0}'", a[0]);
+    //    Console.WriteLine("Press any key to exit the program");
+    //    //Console.ReadKey();
+
+    //    engine.Dispose();
+    //}
+
+    //private void tTest()
+    //{
+    //    REngine.SetEnvironmentVariables();
+    //    REngine engine = REngine.GetInstance();
+    //    // REngine requires explicit initialization.
+    //    // You can set some parameters.
+    //    engine.Initialize();
+
+    //    // .NET Framework array to R vector.
+    //    NumericVector group1 = engine.CreateNumericVector(new double[] { 30.02, 29.99, 30.11, 29.97, 30.01, 29.99 });
+    //    engine.SetSymbol("group1", group1);
+    //    // Direct parsing from R script.
+    //    NumericVector group2 = engine.Evaluate("group2 <- c(29.89, 29.93, 29.72, 29.98, 30.02, 29.98)").AsNumeric();
+
+    //    // Test difference of mean and get the P-value.
+    //    GenericVector testResult = engine.Evaluate("t.test(group1, group2)").AsList();
+    //    double p = testResult["p.value"].AsNumeric().First();
+
+    //    //Console.WriteLine("Group1: [{0}]", string.Join(", ", group1));
+    //    //Console.WriteLine("Group2: [{0}]", string.Join(", ", group2));
+    //    //Console.WriteLine("P-value = {0:0.000}", p);
+
+    //    // you should always dispose of the REngine properly.
+    //    // After disposing of the engine, you cannot reinitialize nor reuse it
+    //    engine.Dispose();
+    //}
+
+    //private void NewTest()
+    //{
+
+    //    //string rHome = null;
+    //    //string rPath = null;
+    //    ////if (args.Length > 0)
+    //    ////    rPath = args[0];
+    //    ////if (args.Length > 1)
+    //    ////    rHome = args[1];
+    //    //rHome = RDotNet.NativeLibrary.NativeUtility.GetRHomeEnvironmentVariable();
+    //    //rPath = RDotNet.NativeLibrary.NativeUtility.GetRLibraryFileName();
+
+
+    //    //Console.WriteLine(rHome);
+    //    //Console.WriteLine(rPath);
+
+    //    //var logInfo = NativeUtility.FindRPaths(ref rPath, ref rHome);
+
+
+    //    //REngine.SetEnvironmentVariables(); //"C:\\Program Files\\R\\R-4.0.2\\bin\\x64","C:\\Program Files\\R\\R-4.0.2"
+    //    using (var engine = REngine.GetInstance("R.dll", true))
+    //    {
+    //        Console.WriteLine("THIS IS THE VERSION*******");
+    //        //Console.WriteLine(engine.DllVersion);
+    //        //var result = engine.Evaluate("a = 10");
+    //        //result = engine.Evaluate("a");
+    //        //var a = result.AsNumeric();
+    //        //Console.WriteLine(a[0]);
+    //    }
+    //}
+
+    //private void TryLoad()
+    //{
+    //    try
+    //    {
+            
+
+    //        string rootpath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot");
+
+    //        // this is where I copied the system R distribution to
+    //        string temp = "wwwroot"; //Application.StartupPath + Path.DirectorySeparatorChar + "R-engine";
+    //                             //R-engine
+    //        var directories2 = Directory.GetDirectories(temp);
+
+
+    //        Uri theURI = new Uri(temp,UriKind.Relative);
+    //        string absPath = theURI.AbsoluteUri;
+
+    //        var directories = Directory.GetDirectories(absPath);
+
+    //        DirectoryInfo di = new DirectoryInfo(temp);
+    //        if (di.Exists)
+    //        {
+    //            Console.WriteLine("exists");
+    //        }
+    //        else
+    //        {
+    //            Console.WriteLine("doesn't exist");
+    //        }
+
+    //        string subDirName;
+    //        if (Environment.Is64BitProcess)
+    //        {
+    //            subDirName = "x64";
+    //        }
+    //        else
+    //        {
+    //            subDirName = "i386";
+    //        }
+
+    //        // note how rPath and rHome are set up
+    //        string rPath = temp + Path.DirectorySeparatorChar + "bin" + Path.DirectorySeparatorChar + subDirName;
+    //        string rHome = temp;
+
+    //        DirectoryInfo di2 = new DirectoryInfo(rPath);
+    //        if (di2.Exists)
+    //        {
+    //            Console.WriteLine("exists");
+    //        }
+    //        else
+    //        {
+    //            Console.WriteLine("doesn't exist");
+    //        }
+
+    //        REngine.SetEnvironmentVariables(rPath, rHome);
+
+    //        RDotNet.StartupParameter param = new StartupParameter();
+    //        param.Interactive = true;
+    //        param.Quiet = false;
+
+    //        // by default: string dll = null, bool initialize = true, StartupParameter parameter = null, ICharacterDevice device = null
+    //        REngine engine = REngine.GetInstance(null, true, param, null);
+
+    //        // by default: StartupParameter parameter = null, ICharacterDevice device = null, bool setupMainLoop = true
+    //        engine.Initialize(param, null, true);
+
+    //        //return engine;
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        // rethrow a simplified exception
+    //        string msg = String.Format("Missing R engine: {0}", ex.Message);
+    //        throw new Exception(msg);
+    //    }
+    }
+
+
+
 }
