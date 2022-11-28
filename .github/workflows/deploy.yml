@@ -4,6 +4,11 @@ on:
   #testpush:
   #  branches: [ master ]
   workflow_dispatch:
+    inputs:
+      project_path:
+        description: 'The path to the Blazor project'
+        required: false
+        default: '.'
 
 jobs:
   deploy:
