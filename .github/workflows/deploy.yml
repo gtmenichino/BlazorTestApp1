@@ -29,14 +29,14 @@ jobs:
           sed -i '/blazor.webassembly.js/i \    <script src="redirect.js"><\/script>' ${{ inputs.project_path }}/${{ github.event.repository.name }}/wwwroot/index.html
         shell: bash
       - name: Publish application
-        run: dotnet publish -c Release -o ${{ runner.temp }}/${{ github.action }}/${{ github.event.repository.name }}
+        run: dotnet publish -c Release -o ${{ runner.temp }}/${{ github.event.repository.name }}
         shell: bash
       - name: Create gh-pages branch
         run: |
           git checkout --orphan gh-pages
           git clean -fdx
           git rm -rf .
-          cp -r ${{ runner.temp }}/${{ github.action }}/${{ github.event.repository.name }}/wwwroot/. .
+          cp -r ${{ runner.temp }}/${{ github.event.repository.name }}/wwwroot/. .
           touch .nojekyll
         shell: bash
       - name: Commit and push
