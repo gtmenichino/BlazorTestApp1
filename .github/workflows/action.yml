@@ -1,5 +1,6 @@
-name: Deploy on GitHub Pages
+name: Revised Deploy on GitHub Pages
 description: 'Build a Blazor Wasm application and deploy it to GitHub Pages.'
+
 inputs:
   project_path:
     description: 'The path to the Blazor project'
